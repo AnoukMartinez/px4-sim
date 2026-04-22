@@ -54,6 +54,19 @@ RUN pip3 install --no-cache-dir --break-system-packages \
     lxml
 
 # ============================================================================
+# Resolving issues related to dependencies
+# ============================================================================
+RUN pip3 install --no-cache-dir --break-system-packages --ignore-installed \
+    "numpy<2" \
+    "ultralytics>=8.2,<8.4"
+
+RUN apt-get update && apt-get install -y \
+    ros-jazzy-cv-bridge \
+    ros-jazzy-vision-msgs \
+    ros-jazzy-image-transport \
+    && rm -rf /var/lib/apt/lists/*
+
+# ============================================================================
 # Clone and build PX4 Autopilot
 # ============================================================================
 WORKDIR /root
