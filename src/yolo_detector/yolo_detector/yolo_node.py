@@ -15,7 +15,7 @@ class YoloNode(Node):
     def __init__(self):
         super().__init__('yolo_node')
 
-        self.declare_parameter('camera_topic', '/world/default/model/x500_mono_cam_0/link/camera_link/sensor/camera/image')
+        self.declare_parameter('camera_topic', '/world/devops_testworld/model/x500_mono_cam_0/link/camera_link/sensor/camera/image')
         self.declare_parameter('model_path', 'yolov8n.pt')
         self.declare_parameter('confidence_threshold', 0.5)
 

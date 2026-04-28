@@ -1,0 +1,105 @@
+<?xml version="1.0" ?>
+<sdf version="1.9">
+  <world name="devops_testworld">
+
+   <physics name="1ms" type="ignored">
+      <max_step_size>0.001</max_step_size>
+      <real_time_factor>1.0</real_time_factor>
+    </physics>
+
+    <plugin filename="gz-sim-physics-system" name="gz::sim::systems::Physics"/>
+    <plugin filename="gz-sim-user-commands-system" name="gz::sim::systems::UserCommands"/>
+    <plugin filename="gz-sim-scene-broadcaster-system" name="gz::sim::systems::SceneBroadcaster"/>
+    <plugin filename="gz-sim-sensors-system" name="gz::sim::systems::Sensors">
+      <render_engine>ogre2</render_engine>
+    </plugin>
+    <plugin filename="gz-sim-imu-system" name="gz::sim::systems::Imu"/>
+    <plugin filename="gz-sim-air-pressure-system" name="gz::sim::systems::AirPressure"/>
+    <plugin filename="gz-sim-magnetometer-system" name="gz::sim::systems::Magnetometer"/>
+    <plugin filename="gz-sim-navsat-system" name="gz::sim::systems::NavSat"/>
+
+    <light type="directional" name="sun">
+      <cast_shadows>true</cast_shadows>
+      <pose>0 0 100 0 0 0</pose>
+      <diffuse>1 1 1 1</diffuse>
+      <specular>0.5 0.5 0.5 1</specular>
+      <direction>-0.5 0.5 -1</direction>
+    </light>
+
+    <model name="ground_plane">
+      <static>true</static>
+      <link name="link">
+        <collision name="collision">
+          <geometry><plane><normal>0 0 1</normal><size>200 200</size></plane></geometry>
+        </collision>
+        <visual name="visual">
+          <geometry><plane><normal>0 0 1</normal><size>200 200</size></plane></geometry>
+          <material>
+            <ambient>0.4 0.6 0.3 1</ambient>
+            <diffuse>0.4 0.6 0.3 1</diffuse>
+          </material>
+        </visual>
+      </link>
+    </model>
+
+    <include>
+      <uri>https://fuel.gazebosim.org/1.0/Athoms/models/House 2</uri>
+      <name>house_1</name>
+      <pose>15 5 0 0 0 0</pose>
+    </include>
+
+    <include>
+      <uri>https://fuel.gazebosim.org/1.0/Athoms/models/House 2</uri>
+      <name>house_2</name>
+      <pose>15 -8 0 0 0 1.57</pose>
+    </include>
+
+    <include>
+      <uri>https://fuel.gazebosim.org/1.0/Athoms/models/Oak tree</uri>
+      <name>oak_1</name>
+      <pose>8 3 0 0 0 0</pose>
+    </include>
+
+    <include>
+      <uri>https://fuel.gazebosim.org/1.0/Athoms/models/Oak tree</uri>
+      <name>oak_2</name>
+      <pose>12 -4 0 0 0 0</pose>
+    </include>
+
+    <include>
+      <uri>https://fuel.gazebosim.org/1.0/Athoms/models/Oak tree</uri>
+      <name>oak_3</name>
+      <pose>20 2 0 0 0 0</pose>
+    </include>
+
+    <include>
+      <uri>https://fuel.gazebosim.org/1.0/Athoms/models/Pine Tree</uri>
+      <name>pine_1</name>
+      <pose>6 -3 0 0 0 0</pose>
+    </include>
+
+    <include>
+      <uri>https://fuel.gazebosim.org/1.0/Athoms/models/Pine Tree</uri>
+      <name>pine_2</name>
+      <pose>18 -6 0 0 0 0</pose>
+    </include>
+
+    <include>
+      <uri>https://fuel.gazebosim.org/1.0/Athoms/models/Pine Tree</uri>
+      <name>pine_3</name>
+      <pose>25 4 0 0 0 0</pose>
+    </include>
+
+    <include>
+      <uri>https://fuel.gazebosim.org/1.0/chapulina/models/Walking actor</uri>
+      <name>walker_1</name>
+      <pose>10 0 0 0 0 0</pose>
+    </include>
+
+    <include>
+      <uri>https://fuel.gazebosim.org/1.0/OpenRobotics/models/Casual female</uri>
+      <name>person_1</name>
+      <pose>14 2 0 0 0 0</pose>
+    </include>
+  </world>
+</sdf>

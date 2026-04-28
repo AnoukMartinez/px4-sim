@@ -32,7 +32,7 @@ class PlannerNode(Node):
         # subs and pubs
         self.create_subscription(State, '/mavros/state', self.state_callback, mavros_qos)
         self.create_subscription(PoseStamped, '/mavros/local_position/pose', self.pose_callback, mavros_qos)
-        self.create_subscription(LaserScan, '/world/default/model/x500_lidar_2d_0/link/link/sensor/lidar_2d_v2/scan', self.scan_callback, 10)
+        self.create_subscription(LaserScan, '/world/devops_testworld/model/x500_lidar_2d_0/link/link/sensor/lidar_2d_v2/scan', self.scan_callback, 10)
         
         self.vel_pub = self.create_publisher(Twist, '/mavros/setpoint_velocity/cmd_vel_unstamped', 10)
         self.arming_client = self.create_client(CommandBool, '/mavros/cmd/arming')

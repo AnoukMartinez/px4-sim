@@ -7,7 +7,11 @@
 
 ### a) Create Create a 3D environment with different objects (humans, buildings, trees, vehicles etc.) in Gazebo or get one from Fuel.
 
-(TODO from last time)
+I created a world using some assets from the web. I used them because they were either on the front page with an appropriate looking thumbnail. The people included were the first results for "[human](https://app.gazebosim.org/search;q=human)".
+
+The world is included in the folder world. It may not be displayed in the demo video for now, for reasons listed below.
+
+![Custom World](./assets/world.png)
 
 ### b) Start PX4 SITL with a vehicle equipped with a depth camera or LiDAR
 This step was rather straightforward as the setup was still working from the last task. The main differences:
@@ -17,10 +21,17 @@ This step was rather straightforward as the setup was still working from the las
     docker exec -it px4_sitl bash
     cd ~/PX4-Autopilot
     make px4_sitl gz_x500_lidar_2d
+
+    # Note: Changed this to my custom world
+    PX4_GZ_WORLD=devops_testworld make px4_sitl gz_x500_lidar_2d
     ```
 - Running a new bridge for the `/world/default/model/x500_lidar_2d_0/link/link/sensor/lidar_2d_v2/scan` topic
     ```
+    docker exec -it px4_sitl bash
     ros2 run ros_gz_bridge parameter_bridge /world/default/model/x500_lidar_2d_0/link/link/sensor/lidar_2d_v2/scan@sensor_msgs/msg/LaserScan@gz.msgs.LaserScan
+
+    # Note: Changed topic path to custom world
+    ros2 run ros_gz_bridge parameter_bridge /world/devops_testworld/model/x500_lidar_2d_0/link/link/sensor/lidar_2d_v2/scan@sensor_msgs/msg/LaserScan@gz.msgs.LaserScan
     ```
 
 ### c) Implement a ROS2 node that computes potential fields and performs local motion control
@@ -101,4 +112,13 @@ source install/setup.bash
 ros2 run local_planner planner_node
 ```
 
-I continued by finishing what should have been the first part of the exercise, which is the 3D model that the drone moves inside of.
+I continued by finishing what should have been the first part of the exercise, which is the 3D model that the drone moves inside of. However, after implementing the testworld, the drone did not lift off anymore.
+```
+WARN  [health_and_arming_checks] Preflight Fail: ekf2 missing data
+INFO  [px4] Startup script returned successfully
+pxh> WARN  [health_and_arming_checks] Preflight Fail: heading estimate invalid
+INFO  [tone_alarm] notify negative
+WARN  [commander] Arming denied: Resolve system health failures first
+```
+
+So I tried running the simulation in the default world once again. Now, the drone also didn't start up anymore. I decided to contact the TA at this point, but for the submission I resorted to submitting the video of the drone flying in the empty world for now, as well as the code for the node although it is unconfirmed wether it works fully yet.
