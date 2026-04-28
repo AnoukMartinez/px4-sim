@@ -72,3 +72,33 @@ First step now, same as last week, will be to create the node and everything for
 cd ~/ros2_ws/src
 ros2 pkg create local_planner --build-type ament_python --dependencies rclpy sensor_msgs geometry_msgs mavros_msgs
 ```
+
+For the implementation, I oriented myself on the yolo_node from the last assignment, starting off with the subscriptions. I also defined a callback function for each of these parameters.
+
+For the main loop functionality, I informed myself using some seperate lecture slides ([example](https://www.cs.columbia.edu/~allen/F17/NOTES/potentialfield.pdf)), and decided which additional parameters I was going to need. In this case, I defined these in the initial setup (`current_pose` to track the position, `current_state` to make sure the robot can fly (this caused some issues for the last assignment, and I now realize why), `latest_scan`, `goal_reached` so we can know when we can finish the simulation, and lastly `offboard_set`)
+TODO
+
+For the possible states we recieve from the mavros subscribed node, looking at [this](https://docs.ros.org/en/noetic/api/mavros_msgs/html/msg/State.html) documentation was helpful. We know that we want to be in the offboard state, so we check first if that's the case and correct if necessary. If everything is ready (or still ready since we are running these computations in a loop), we can start the algorithm.
+
+---
+
+Running the node ws quite straightforward, but there was one big issue. The node was trying to enter the armed state, but for some reason the command ran infinitely. To troubleshoot this, I manually reset the drone values, and it displayed a message letting me know everything works now.
+
+```
+pxh> param set COM_ARM_WO_GPS 1
+pxh> param set NAV_DLL_ACT 0
+  NAV_DLL_ACT: curr: 2 -> new: 0
+pxh> INFO  [commander] Ready for takeoff!
+```
+
+I ran the node via these commands:
+```
+# Building it first...
+colcon build --packages-select local_planner
+source install/setup.bash
+
+# ...Then running it
+ros2 run local_planner planner_node
+```
+
+I continued by finishing what should have been the first part of the exercise, which is the 3D model that the drone moves inside of.
